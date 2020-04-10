@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (checkPermission()) {
                 downloadAndUnzipContent();
+                unpackContent();
                     setContentView(R.layout.activity_main);
                     webview = (WebView) findViewById(R.id.webView);
                     spinner = (ProgressBar) findViewById(R.id.progressBar1);
@@ -85,6 +86,10 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         new DownloadFile().execute("http://anton-sementsov.bplaced.net/package.zip", "package.zip");
     }
 
+    private void unpackContent(){
+        new UnpackZip().execute("/", "package.zip");
+    }
+
     private boolean checkPermission() {
         int result = ContextCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
         if (result == PackageManager.PERMISSION_GRANTED) {
@@ -106,6 +111,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
 
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 downloadAndUnzipContent();
+                unpackContent();
                 setContentView(R.layout.activity_main);
                 webview = (WebView) findViewById(R.id.webView);
                 spinner = (ProgressBar) findViewById(R.id.progressBar1);
