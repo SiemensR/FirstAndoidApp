@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         super.onCreate(savedInstanceState);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (checkPermission()) {
-                if (downloadAndUnzipContent()) {
+                downloadAndUnzipContent();
                     setContentView(R.layout.activity_main);
                     webview = (WebView) findViewById(R.id.webView);
                     spinner = (ProgressBar) findViewById(R.id.progressBar1);
@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
                     webview.getSettings().setDomStorageEnabled(true);
                     webview.setOverScrollMode(WebView.OVER_SCROLL_NEVER);
                     webview.loadUrl("file:///android_asset/index.html");
-                }
+
                 } else {
                     requestPermission();
                 }
@@ -81,29 +81,8 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         }
 
 
-    private boolean downloadAndUnzipContent(){
-        try {
-            String url = "http://anton-sementsov.bplaced.net/package.zip";
-            DownloadFileAsync download = new DownloadFileAsync( "package.zip", this, new DownloadFileAsync.PostDownload(){
-                @Override
-                public void downloadDone(File file) {
-                    Log.i(TAG, "file download completed");
-
-                    // check unzip file now
-                    try {
-                        Decompress unzip = new Decompress(file);
-                        unzip.unzip();
-                        Log.i(TAG, "file unzip completed");
-                    } catch (Exception e) {
-                        Log.i(TAG, "cannot unzip file");
-                    }
-                }
-            });
-            download.execute(url);
-        } catch (Exception e) {
-           // return false;
-        }
-        return true;
+    private void downloadAndUnzipContent(){
+        new DownloadFile().execute("http://anton-sementsov.bplaced.net/package.zip", "package.zip");
     }
 
     private boolean checkPermission() {
