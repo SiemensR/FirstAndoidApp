@@ -47,7 +47,8 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
                     webview.getSettings().setJavaScriptEnabled(true);
                     webview.getSettings().setDomStorageEnabled(true);
                     webview.setOverScrollMode(WebView.OVER_SCROLL_NEVER);
-                    webview.loadUrl("file:///android_asset/index.html");
+                    File lFile = new File(Environment.getExternalStorageDirectory() + "/" + "storage/tmp/index.html");
+                    webview.loadUrl("file:///" + lFile.getAbsolutePath());
 
                 } else {
                     requestPermission();
@@ -87,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
     }
 
     private void unpackContent(){
-        new UnpackZip().execute("/", "package.zip");
+        new UnpackZip().execute("/storage/tmp/", "package.zip");
     }
 
     private boolean checkPermission() {
@@ -120,7 +121,8 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
                 webview.getSettings().setJavaScriptEnabled(true);
                 webview.getSettings().setDomStorageEnabled(true);
                 webview.setOverScrollMode(WebView.OVER_SCROLL_NEVER);
-                webview.loadUrl("file:///android_asset/index.html");
+                File lFile = new File(Environment.getExternalStorageDirectory() + "/" + "storage/tmp/index.html");
+                webview.loadUrl("file:///" + lFile.getAbsolutePath());
             } else {
                 Toast.makeText(MainActivity.this, "Permission Denied... \n You Should Allow External Storage Permission To Download Files.", Toast.LENGTH_LONG).show();
             }

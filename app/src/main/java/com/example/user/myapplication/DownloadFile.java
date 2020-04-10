@@ -23,7 +23,7 @@ public class DownloadFile extends AsyncTask<String, Void, Void> {
     protected Void doInBackground(String... strings) {
         String fileUrl = strings[0];
         String fileName = strings[1];
-        String extStorageDirectory = Environment.getExternalStorageDirectory().toString();
+        String extStorageDirectory = Environment.getExternalStorageDirectory().toString() + "/storage/tmp/";
         File folder = new File(extStorageDirectory);
         folder.mkdir();
 
